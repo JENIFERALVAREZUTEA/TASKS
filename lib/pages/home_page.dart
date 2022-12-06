@@ -39,6 +39,51 @@ CollectionReference tasksReference =FirebaseFirestore.instance.collection('tasks
               ),
             
               ),
+
+            ElevatedButton(
+              onPressed: () {
+              
+              tasksReference.add(
+                {
+                "nombre": "Marleni",
+                "Apellidos": "Ayma Letona",
+
+              },
+              ).then((DocumentReference value) {
+                print(value.id);
+              }).catchError ((error){
+                print("Ocurrio un error en el registro");
+              }).whenComplete((){
+                print("El registro a terminado");
+              });
+            },
+            child: Text(
+              "Agregar documento",
+            ),
+            ),
+
+            ElevatedButton(onPressed: (){
+              tasksReference
+              .doc("V9pmY0sCZ1ZG1QiALxJS")
+              .update(
+                {
+                  "nombre":"Luz Maria",
+                  "Apellidos":"Quispe Achahui",
+                },
+                )
+              .catchError((error){
+                print(error);
+              },
+              ).whenComplete(
+                () {
+                print("Actualizacion terminada");
+                },
+              );
+            }, 
+            child: Text(
+              "Actualizar Documento"
+              ),
+              ),
           ],
         ),
       ),
