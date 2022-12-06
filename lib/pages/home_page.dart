@@ -84,6 +84,38 @@ CollectionReference tasksReference =FirebaseFirestore.instance.collection('tasks
               "Actualizar Documento"
               ),
               ),
+          
+            ElevatedButton(onPressed: (){
+              
+              tasksReference.doc("V9pmY0sCZ1ZG1QiALxJS").delete().catchError(
+                (error){
+                  print(error);
+                },
+              ).whenComplete((){
+                print("La eliminacion esta completada");
+              },
+              );
+            }, 
+            child: Text(
+              "Eliminar documento"
+              )
+              ),
+         
+            ElevatedButton(
+              onPressed: (){
+              tasksReference.doc("A0001").set(
+                {
+                  "nombre":"Paloma",
+                  "Apellidos":"Portilla",
+                },
+                ).catchError((error)
+                {
+                  print("Creacion completada");
+                });
+            },
+             child: Text("Agregar documento personalizado"
+             )
+             )
           ],
         ),
       ),
