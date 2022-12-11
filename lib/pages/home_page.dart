@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:tasks/ui/widgets/item_task_widget.dart';
 import 'package:tasks/ui/widgets/textfield_search_widget.dart';
 
 import '../ui/general/colors.dart';
@@ -109,15 +110,16 @@ class HomePage extends StatelessWidget {
                 color: kBrandPrymaryColor.withOpacity(0.85),
               ),
               ),
-              Container(
-                child: Column(
-                children: [
-                    Text("Un dato puede ser un carácter leıdo de un teclado, ",),
-                   Text("Un dato puede ser un carácter leıdo de un teclado, ",),
-                ],
-                
-                ),
-              ),
+           
+              ItemTaskWidget(),
+                   ItemTaskWidget(),
+                        ItemTaskWidget(),
+                             ItemTaskWidget(),
+              
+        
+              
+        
+
               divider10(),
          
             ],
