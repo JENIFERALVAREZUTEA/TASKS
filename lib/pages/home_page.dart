@@ -1,4 +1,6 @@
 
+import 'dart:ui';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +12,7 @@ import '../ui/widgets/general_widget.dart';
 class HomePage extends StatelessWidget {
   CollectionReference tasksReference =
       FirebaseFirestore.instance.collection('tasks');
+
 
 
   @override
@@ -33,7 +36,7 @@ class HomePage extends StatelessWidget {
                     color: Colors.white,
                   ),
                   Text(
-                    "Nueva tarea",
+                    "Ingresar datos",
                     style: TextStyle(color: Colors.white, fontSize: 18.0),
                   ),
                 ],
@@ -74,7 +77,7 @@ class HomePage extends StatelessWidget {
                         ),
                         divider6(),
                         Text(
-                          "Mis tareas",
+                          "DATE",
                           style: TextStyle(
                             fontSize: 36.0,
                             fontWeight: FontWeight.w600,
@@ -93,14 +96,30 @@ class HomePage extends StatelessWidget {
                           ),
                           child: TextFieldSearchWidget(
                             icon: Icons.search,
-                            hintText: "Buscar tarea",
+                            hintText: "Buscar datos",
                           ),
                         ),
                       ]),
                 ),
               ),
+              Text("Todos los datos",
+              style: TextStyle(
+                fontSize: 14.0,
+                fontWeight: FontWeight.w600,
+                color: kBrandPrymaryColor.withOpacity(0.85),
+              ),
+              ),
+              Container(
+                child: Column(
+                children: [
+                    Text("Un dato puede ser un carácter leıdo de un teclado, ",),
+                   Text("Un dato puede ser un carácter leıdo de un teclado, ",),
+                ],
+                
+                ),
+              ),
               divider10(),
-           
+         
             ],
           ),
         )
