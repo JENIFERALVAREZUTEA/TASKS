@@ -37,7 +37,7 @@ class HomePage extends StatelessWidget {
                     color: Colors.white,
                   ),
                   Text(
-                    "Ingresar datos",
+                    "Mis tareas",
                     style: TextStyle(color: Colors.white, fontSize: 18.0),
                   ),
                 ],
@@ -78,7 +78,7 @@ class HomePage extends StatelessWidget {
                         ),
                         divider6(),
                         Text(
-                          "DATE",
+                          "Mis tareas",
                           style: TextStyle(
                             fontSize: 36.0,
                             fontWeight: FontWeight.w600,
@@ -97,13 +97,13 @@ class HomePage extends StatelessWidget {
                           ),
                           child: TextFieldSearchWidget(
                             icon: Icons.search,
-                            hintText: "Buscar datos",
+                            hintText: "Buscar tareas",
                           ),
                         ),
                       ]),
                 ),
               ),
-              Text("Todos los datos",
+              Text("Todas mis tareas",
               style: TextStyle(
                 fontSize: 14.0,
                 fontWeight: FontWeight.w600,
