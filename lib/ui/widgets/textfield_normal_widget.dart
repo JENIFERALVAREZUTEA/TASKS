@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class TextFieldSearchWidget extends StatelessWidget {
+class TextFieldNormalWidget extends StatelessWidget {
   String hintText;
   IconData icon;
 
-  TextFieldSearchWidget({
+  TextFieldNormalWidget({
     required this.hintText,
     required this.icon});
 
