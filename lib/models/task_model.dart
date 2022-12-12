@@ -4,16 +4,13 @@ class TaskModel{
   String date;
   String category;
   bool status;
-
   TaskModel({
     required this.title,
     required this.description,
     required this.date,
     required this.category,
-    required this.status
-    });
-
-  factory TaskModel.fromJson(Map<String, dynamic> json) => TaskModel(
+    required this.status});
+    factory TaskModel.fromJson(Map<String, dynamic> json) => TaskModel(
       title: json["title"], 
       description: json["description"], 
       date: json["date"], 
@@ -21,4 +18,11 @@ class TaskModel{
       status: json["status"],
       );
 
+     Map<String, dynamic> toJson()=>{
+        "title": title,
+        "description": description,
+        "date": date,
+        "category": category,
+        "status": status,
+      };
 }

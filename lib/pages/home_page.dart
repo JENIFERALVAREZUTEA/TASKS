@@ -15,76 +15,19 @@ class HomePage extends StatelessWidget {
   CollectionReference tasksReference =
       FirebaseFirestore.instance.collection('tasks');
 
+  final TextEditingController _searchController = TextEditingController();
+
   showTaskForm(BuildContext context) {
     showModalBottomSheet(
+        isScrollControlled: true,
         context: context,
         backgroundColor: Colors.transparent,
         builder: (BuildContext context) {
-          return Container(
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(22.0),
-                      topRight: Radius.circular(22.0))),
-              padding: EdgeInsets.all(14),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    "Agregar tarea",
-                    style:
-                        TextStyle(fontWeight: FontWeight.w600, fontSize: 15.0),
-                  ),
-                  divider10(),
-                  TextFieldNormalWidget(
-                    hintText: "Titulo",
-                    icon: Icons.text_fields,
-                  ),
-                  divider6(),
-                  TextFieldNormalWidget(
-                    hintText: "Descripción",
-                    icon: Icons.description,
-                  ),
-                  divider3(),
-                  Text("Categoria"),
-                  Wrap(
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    runAlignment: WrapAlignment.start,
-                    spacing: 10.0,
-                    children: [
-                      FilterChip(
-                          selected: true,
-                          backgroundColor: kBrandSecondaryColor,
-                          selectedColor: categoryColor["Personal"],
-                          checkmarkColor: Colors.white,
-                          padding: EdgeInsets.symmetric(horizontal: 8.0),
-                          labelStyle: TextStyle(color: Colors.white),
-                          label: Text("Personal"),
-                          onSelected: (bool value) {}),
-                      FilterChip(
-                          selected: true,
-                          backgroundColor: kBrandSecondaryColor,
-                          selectedColor: categoryColor["Trabajo"],
-                          checkmarkColor: Colors.white,
-                          padding: EdgeInsets.symmetric(horizontal: 8.0),
-                          labelStyle: TextStyle(color: Colors.white),
-                          label: Text("Trabajo"),
-                          onSelected: (bool value) {}),
-                      FilterChip(
-                          selected: true,
-                          backgroundColor: kBrandSecondaryColor,
-                          selectedColor: categoryColor["Otro"],
-                          checkmarkColor: Colors.white,
-                          padding: EdgeInsets.symmetric(horizontal: 8.0),
-                          labelStyle: TextStyle(color: Colors.white),
-                          label: Text("Otro"),
-                          onSelected: (bool value) {}),
-                    ],
-                  ),
-                  divider10(),
-                  ButtonNormalWidget(),
-                ],
-              ));
+          return Padding(
+            padding: MediaQuery.of(context).viewInsets,
+            child: TaskFormWidget(),
+          );
+          //fin container
         });
   }
 
@@ -171,6 +114,7 @@ class HomePage extends StatelessWidget {
                           child: TextFieldNormalWidget(
                             icon: Icons.search,
                             hintText: "Buscar tarea",
+                            controller: _searchController,
                           ),
                         ),
                       ]),
@@ -195,13 +139,7 @@ class HomePage extends StatelessWidget {
                           if (snap.hasData) {
                             List<TaskModel> tasks = [];
                             QuerySnapshot collection = snap.data;
-                            /*
-                      1 forma
-                      collection.docs.forEach((element) {
-                      Map<String,dynamic> myMap = element.data() as Map<String,dynamic>;
-                      tasks.add(TaskModel.fromJson(myMap));
-                      });*/
-                            //2da forma
+                       
                             tasks = collection.docs
                                 .map((e) => TaskModel.fromJson(
                                     e.data() as Map<String, dynamic>))
