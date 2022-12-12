@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:tasks/models/task_model.dart';
 import 'package:tasks/ui/widgets/button_normal_widget.dart';
 import 'package:tasks/ui/widgets/item_task_widget.dart';
+import 'package:tasks/ui/widgets/task_form_widget.dart';
 import 'package:tasks/ui/widgets/textfield_normal_widget.dart';
 
 import '../ui/general/colors.dart';
