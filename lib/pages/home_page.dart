@@ -112,11 +112,11 @@ class HomePage extends StatelessWidget {
                               ),
                             ],
                           ),
-                          child: TextFieldNormalWidget(
-                            icon: Icons.search,
-                            hintText: "Buscar tarea",
-                            controller: _searchController,
-                          ),
+                        //  child: TextFieldNormalWidget(
+                         //   icon: Icons.search,
+                         //   hintText: "Buscar tarea",
+                           // controller: _searchController,
+                        ///  ),
                         ),
                       ]),
                 ),
