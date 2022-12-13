@@ -9,7 +9,10 @@ class TaskModel{
     required this.description,
     required this.date,
     required this.category,
-    required this.status});
+    required this.status
+    });
+
+    
     factory TaskModel.fromJson(Map<String, dynamic> json) => TaskModel(
       title: json["title"], 
       description: json["description"], 
