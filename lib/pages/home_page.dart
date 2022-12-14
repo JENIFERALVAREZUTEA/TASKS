@@ -1,21 +1,27 @@
-import 'dart:ui';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:tasks/models/task_model.dart';
+import 'package:tasks/ui/general/colors.dart';
 import 'package:tasks/ui/widgets/button_normal_widget.dart';
+import 'package:tasks/ui/widgets/general_widget.dart';
 import 'package:tasks/ui/widgets/item_task_widget.dart';
 import 'package:tasks/ui/widgets/task_form_widget.dart';
-import 'package:tasks/ui/widgets/textfield_normal_widget.dart';
-
-import '../ui/general/colors.dart';
-import '../ui/widgets/general_widget.dart';
+import '../models/task_model.dart';
+import '../ui/widgets/textfield_normal_widget.dart';
 
 class HomePage extends StatelessWidget {
   CollectionReference tasksReference =
       FirebaseFirestore.instance.collection('tasks');
-
+/*
+  Stream<int> counter() async*{
+    for(int i=0;i<10;i++){
+      yield i;
+      await Future.delayed(const Duration(seconds: 2));
+    }
+  }
+  Future<int> getNumber() async{
+    return 1000;
+  }
+  */
   final TextEditingController _searchController = TextEditingController();
 
   showTaskForm(BuildContext context) {
@@ -112,11 +118,11 @@ class HomePage extends StatelessWidget {
                               ),
                             ],
                           ),
-                        //  child: TextFieldNormalWidget(
-                         //   icon: Icons.search,
-                         //   hintText: "Buscar tarea",
-                           // controller: _searchController,
-                        ///  ),
+                          child: TextFieldNormalWidget(
+                            icon: Icons.search,
+                            hintText: "Buscar tarea",
+                            controller: _searchController,
+                          ),
                         ),
                       ]),
                 ),
@@ -140,11 +146,27 @@ class HomePage extends StatelessWidget {
                           if (snap.hasData) {
                             List<TaskModel> tasks = [];
                             QuerySnapshot collection = snap.data;
-                       
+                            /*
+                      1 forma
+                      collection.docs.forEach((element) {
+                      Map<String,dynamic> myMap = element.data() as Map<String,dynamic>;
+                      tasks.add(TaskModel.fromJson(myMap));
+                      });*/
+
+                            //2da forma
+                            /*
                             tasks = collection.docs
                                 .map((e) => TaskModel.fromJson(
                                     e.data() as Map<String, dynamic>))
                                 .toList();
+                            */
+                            //obteniendo el id
+                            tasks = collection.docs.map((e){
+                              TaskModel task = TaskModel.fromJson(e.data() as Map<String,dynamic>);
+                              task.id = e.id;
+                              return task;
+                            }).toList();
+
                             return ListView.builder(
                                 itemCount: tasks.length,
                                 shrinkWrap: true,
