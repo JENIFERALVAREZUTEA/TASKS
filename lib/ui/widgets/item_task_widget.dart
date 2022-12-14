@@ -8,7 +8,10 @@ import '../general/colors.dart';
 
 class ItemTaskWidget extends StatelessWidget {
   TaskModel taskModel;
+
   ItemTaskWidget({required this.taskModel});
+
+  
   final MyServiceFirestore _myServiceFirestore =
       MyServiceFirestore(collection: "tasks");
 
@@ -17,6 +20,9 @@ class ItemTaskWidget extends StatelessWidget {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(18.0),
+              ),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -45,8 +51,11 @@ class ItemTaskWidget extends StatelessWidget {
                           "Cancelar",
                           style: TextStyle(
                               color: kBrandPrymaryColor.withOpacity(0.5),
-                              fontWeight: FontWeight.w400),
-                        )),
+                              fontWeight: FontWeight.w400,
+                              fontSize: 14.0
+                              ),
+                        ),
+                        ),
                     divider20w(),
                     ElevatedButton(
                         onPressed: () {
@@ -57,7 +66,8 @@ class ItemTaskWidget extends StatelessWidget {
                             primary: kBrandPrymaryColor,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(14),
-                            )),
+                            )
+                            ),
                         child: Text("Finalizar"))
                   ],
                 ),
@@ -142,7 +152,6 @@ class ItemTaskWidget extends StatelessWidget {
                   }),
             )
           ],
-        )
-        );
+        ));
   }
 }
