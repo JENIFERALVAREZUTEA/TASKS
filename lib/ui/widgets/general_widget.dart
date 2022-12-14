@@ -68,12 +68,13 @@ showSnackBarError(BuildContext context, String text) {
     SnackBar(
       behavior: SnackBarBehavior.floating,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14.0)),
-      backgroundColor: Colors.red,
+      backgroundColor: Colors.redAccent,
       content: Row(
         children: [
-          const Icon(Icons.warning, color: Colors.white),
+          const Icon(Icons.warning_amber, color: Colors.white),
           divider10w(),
           Text(text),
+
         ],
       ),
     ),

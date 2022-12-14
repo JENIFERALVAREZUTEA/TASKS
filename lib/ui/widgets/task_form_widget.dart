@@ -64,11 +64,12 @@ class _TaskFormWidgetState extends State<TaskFormWidget> {
         if (value.isNotEmpty) {
           //cerrar la ventana
           Navigator.pop(context);
-          showSnackBarSuccess(context, "La tarea se guardó con éxito");
+          showSnackBarSuccess(context, "La tarea se guardo con exito");
         }
       }).catchError((error) {
         showSnackBarError(
             context, "Se ha producido un error, vuelve a intentarlo");
+            Navigator.pop(context);
       });
     }
   }
