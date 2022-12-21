@@ -7,21 +7,12 @@ import 'package:tasks/ui/widgets/item_task_widget.dart';
 import 'package:tasks/ui/widgets/task_form_widget.dart';
 import '../models/task_model.dart';
 import '../ui/widgets/textfield_normal_widget.dart';
+import 'package:tasks/utils/task_search_delegate.dart';
 
 class HomePage extends StatelessWidget {
   CollectionReference tasksReference =
       FirebaseFirestore.instance.collection('tasks');
-/*
-  Stream<int> counter() async*{
-    for(int i=0;i<10;i++){
-      yield i;
-      await Future.delayed(const Duration(seconds: 2));
-    }
-  }
-  Future<int> getNumber() async{
-    return 1000;
-  }
-  */
+
   final TextEditingController _searchController = TextEditingController();
 
   showTaskForm(BuildContext context) {
@@ -92,7 +83,7 @@ class HomePage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Bienvenido",
+                          "Bienvenida Jenifer",
                           style: TextStyle(
                             fontSize: 18.0,
                             fontWeight: FontWeight.w600,
@@ -119,12 +110,16 @@ class HomePage extends StatelessWidget {
                             ],
                           ),
                           child: TextFieldNormalWidget(
+                            controller: _searchController,
                             icon: Icons.search,
                             hintText: "Buscar tarea",
-                            controller: _searchController,
+                            onTap: ()async{
+                             await showSearch(context: context, delegate: TaskSearchDelegate());
+                            },
                           ),
                         ),
-                      ]),
+                      ]
+                      ),
                 ),
               ),
               divider10(),
