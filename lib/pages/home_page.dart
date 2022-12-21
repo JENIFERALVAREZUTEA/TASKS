@@ -5,16 +5,27 @@ import 'package:tasks/ui/widgets/button_normal_widget.dart';
 import 'package:tasks/ui/widgets/general_widget.dart';
 import 'package:tasks/ui/widgets/item_task_widget.dart';
 import 'package:tasks/ui/widgets/task_form_widget.dart';
+import 'package:tasks/utils/task_search_delegate.dart';
 import '../models/task_model.dart';
 import '../ui/widgets/textfield_normal_widget.dart';
-import 'package:tasks/utils/task_search_delegate.dart';
 
 class HomePage extends StatelessWidget {
+  List<TaskModel> tasksGeneral = [];
+
   CollectionReference tasksReference =
       FirebaseFirestore.instance.collection('tasks');
-
+/*
+  Stream<int> counter() async*{
+    for(int i=0;i<10;i++){
+      yield i;
+      await Future.delayed(const Duration(seconds: 2));
+    }
+  }
+  Future<int> getNumber() async{
+    return 1000;
+  }
+  */
   final TextEditingController _searchController = TextEditingController();
-
   showTaskForm(BuildContext context) {
     showModalBottomSheet(
         isScrollControlled: true,
@@ -83,7 +94,7 @@ class HomePage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Bienvenida Jenifer",
+                          "Bienvenido",
                           style: TextStyle(
                             fontSize: 18.0,
                             fontWeight: FontWeight.w600,
@@ -110,16 +121,18 @@ class HomePage extends StatelessWidget {
                             ],
                           ),
                           child: TextFieldNormalWidget(
-                            controller: _searchController,
                             icon: Icons.search,
                             hintText: "Buscar tarea",
-                            onTap: ()async{
-                             await showSearch(context: context, delegate: TaskSearchDelegate());
+                            controller: _searchController,
+                            onTap: () async {
+                              await showSearch(
+                                  context: context,
+                                  delegate:
+                                      TaskSearchDelegate(tasks: tasksGeneral));
                             },
                           ),
                         ),
-                      ]
-                      ),
+                      ]),
                 ),
               ),
               divider10(),
@@ -147,7 +160,6 @@ class HomePage extends StatelessWidget {
                       Map<String,dynamic> myMap = element.data() as Map<String,dynamic>;
                       tasks.add(TaskModel.fromJson(myMap));
                       });*/
-
                             //2da forma
                             /*
                             tasks = collection.docs
@@ -156,11 +168,14 @@ class HomePage extends StatelessWidget {
                                 .toList();
                             */
                             //obteniendo el id
-                            tasks = collection.docs.map((e){
-                              TaskModel task = TaskModel.fromJson(e.data() as Map<String,dynamic>);
+                            tasks = collection.docs.map((e) {
+                              TaskModel task = TaskModel.fromJson(
+                                  e.data() as Map<String, dynamic>);
                               task.id = e.id;
                               return task;
                             }).toList();
+                            tasksGeneral.clear();
+                            tasksGeneral = tasks;
 
                             return ListView.builder(
                                 itemCount: tasks.length,
