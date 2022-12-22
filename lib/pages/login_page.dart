@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:tasks/pages/register_page.dart';
 import 'package:tasks/ui/general/colors.dart';
 import 'package:tasks/ui/widgets/button_custom_widget.dart';
 import 'package:tasks/ui/widgets/button_normal_widget.dart';
@@ -37,21 +38,36 @@ class _LoginPageState extends State<LoginPage> {
               divider20(),
               TextFieldPasswordWidget(controller: _passwordController),
               divider10(),
-              ButtonCustomWidget(text: "Hola", 
+              ButtonCustomWidget(text: "Iniciar Sesión", 
               color: kBrandPrymaryColor, 
               icon: "check"),
-              divider10(),
+              divider6(),
               Text("O ingresa con tus redes sociales"),
-              divider20(),
+              divider6(),
               ButtonCustomWidget(
                 text: "Iniciar sesión con Google", 
                 color: Color(0xfff84b2a), 
                 icon: "google"),
-              divider20(),
+              divider6(),
               ButtonCustomWidget(
                 text: "Iniciar sesión con Facebook", 
                 color: Color(0xfff507CC0), 
                 icon: "facebook"),
+              divider10(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("¿No tienes cuenta?"),
+                  divider10w(),
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=> RegisterPage()));
+                    },
+                    child: Text("Registrate",style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      color: kBrandPrymaryColor) ,)),
+                ],
+              )
             ],
           ),
           padding: EdgeInsets.all(16.0)),
