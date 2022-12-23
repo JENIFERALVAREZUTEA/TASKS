@@ -11,6 +11,7 @@ import 'package:tasks/ui/widgets/general_widget.dart';
 import 'package:tasks/ui/widgets/textfield_normal_widget.dart';
 
 import 'package:tasks/ui/widgets/texfield_password_widget.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -25,6 +26,15 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _passwordController = TextEditingController();
 
   final TextEditingController _fullnameController = TextEditingController();
+
+  _registerUser() async {
+    UserCredential userCredential =
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      email: "76270652jenifer@gmail.com",
+      password: "movicom2022",
+    );
+    print(userCredential);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +51,7 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
             divider20(),
             Text(
-              "Iniciar Sesión",
+              "Registrate",
               style: TextStyle(
                   fontSize: 20.0,
                   fontWeight: FontWeight.w600,
@@ -59,7 +69,12 @@ class _RegisterPageState extends State<RegisterPage> {
             TextFieldPasswordWidget(controller: _passwordController),
             divider10(),
             ButtonCustomWidget(
-                text: "Registrate", color: kBrandPrymaryColor, icon: "check"),
+                text: "Registrate", 
+                color: kBrandPrymaryColor, 
+                 icon: "check",
+              onPressed: (){
+                _registerUser();
+              },),
           ]),
         ),
       ),
