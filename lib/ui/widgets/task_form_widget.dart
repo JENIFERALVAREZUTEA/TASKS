@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tasks/models/task_model.dart';
 import 'package:tasks/services/my_service_firestore.dart';
 import 'package:tasks/ui/general/colors.dart';
+import 'package:tasks/ui/widgets/button_normal_widget.dart';
 
 import 'package:tasks/ui/widgets/general_widget.dart';
 import 'package:tasks/ui/widgets/textfield_normal_widget.dart';
@@ -186,7 +187,7 @@ class _TaskFormWidgetState extends State<TaskFormWidget> {
                   showSelectDate();
                 },
               ),
-              ButtonNormalWidget(
+             ButtonNormalWidget(
                 onPressed: () {
                   registerTask();
                 },

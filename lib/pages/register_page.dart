@@ -19,21 +19,27 @@ class RegisterPage extends StatefulWidget {
   @override
   State<RegisterPage> createState() => _RegisterPageState();
 }
-
 class _RegisterPageState extends State<RegisterPage> {
+  final keyForm = GlobalKey<FormState>(); 
   final TextEditingController _emailController = TextEditingController();
-
   final TextEditingController _passwordController = TextEditingController();
-
   final TextEditingController _fullnameController = TextEditingController();
 
   _registerUser() async {
-    UserCredential userCredential =
-        await FirebaseAuth.instance.createUserWithEmailAndPassword(
-      email: "76270652jenifer@gmail.com",
-      password: "movicom2022",
-    );
-    print(userCredential);
+    try {
+      if (keyForm.currentState!.validate()) {
+        UserCredential userCredential =
+            await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: _emailController.text,
+          password: _passwordController.text,
+        );
+      }
+    } on FirebaseAuthException catch (error) {
+      if (error.code == "weak-password") {
+        showSnackBarError(context, "La contraseña es muy débil");
+      } else if (error.code == "email-already-in-use") ;
+      showSnackBarError(context, "El correo electrónico está en uso");
+    }
   }
 
   @override
@@ -43,39 +49,39 @@ class _RegisterPageState extends State<RegisterPage> {
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Column(children: [
-            divider30(),
-            SvgPicture.asset(
-              "assets/images/register.svg",
-              height: 180.0,
-            ),
-            divider20(),
-            Text(
-              "Registrate",
-              style: TextStyle(
+          child: Form(
+            key: keyForm,
+            child: Column(
+              children: [
+                divider30(),
+                SvgPicture.asset("assets/images/register.svg",
+                height: 180.0,),
+                divider20(),
+                Text("Regístrate", style: TextStyle(
                   fontSize: 20.0,
                   fontWeight: FontWeight.w600,
-                  color: kBrandPrymaryColor),
-            ),
-            TextFieldNormalWidget(
-                hintText: "Nombre Completo",
-                icon: Icons.email,
-                controller: _fullnameController),
-            TextFieldNormalWidget(
-                hintText: "Correo",
-                icon: Icons.email,
-                controller: _emailController),
-            divider20(),
-            TextFieldPasswordWidget(controller: _passwordController),
-            divider10(),
-            ButtonCustomWidget(
-                text: "Registrate", 
+                  color: kBrandPrymaryColor),),
+                TextFieldNormalWidget(
+                  hintText: "Nombre Completo", 
+                  icon: Icons.email, 
+                  controller: _fullnameController),
+                TextFieldNormalWidget(
+                  hintText: "Correo", 
+                  icon: Icons.email, 
+                  controller: _emailController),
+                divider20(),
+                TextFieldPasswordWidget(controller: _passwordController),
+                divider10(),
+                ButtonCustomWidget(text: "Registrate", 
                 color: kBrandPrymaryColor, 
-                 icon: "check",
-              onPressed: (){
-                _registerUser();
-              },),
-          ]),
+                icon: "check",
+                onPressed: (){
+                  _registerUser();
+                },
+                ),  
+              ]
+            ),
+          ),
         ),
       ),
     );
