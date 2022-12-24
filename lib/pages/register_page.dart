@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:tasks/models/user_model.dart';
+import 'package:tasks/pages/home_page.dart';
+import 'package:tasks/services/my_service_firestore.dart';
 
 import 'package:tasks/ui/general/colors.dart';
 
@@ -19,11 +22,14 @@ class RegisterPage extends StatefulWidget {
   @override
   State<RegisterPage> createState() => _RegisterPageState();
 }
+
 class _RegisterPageState extends State<RegisterPage> {
-  final keyForm = GlobalKey<FormState>(); 
+  final keyForm = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _fullnameController = TextEditingController();
+
+  MyServiceFirestore userService = MyServiceFirestore(collection: "users");
 
   _registerUser() async {
     try {
@@ -33,6 +39,22 @@ class _RegisterPageState extends State<RegisterPage> {
           email: _emailController.text,
           password: _passwordController.text,
         );
+
+        if (userCredential.user != null) {
+          UserModel userModel = UserModel(
+            fullName: _fullnameController.text,
+            email: _passwordController.text,
+          );
+
+          userService.addUser(userModel).then(((value) {
+            if (value.isNotEmpty) {
+              Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => HomePage()),
+                  (route) => false);
+            }
+          }));
+        }
       }
     } on FirebaseAuthException catch (error) {
       if (error.code == "weak-password") {
@@ -51,36 +73,40 @@ class _RegisterPageState extends State<RegisterPage> {
           padding: const EdgeInsets.all(16.0),
           child: Form(
             key: keyForm,
-            child: Column(
-              children: [
-                divider30(),
-                SvgPicture.asset("assets/images/register.svg",
-                height: 180.0,),
-                divider20(),
-                Text("Regístrate", style: TextStyle(
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.w600,
-                  color: kBrandPrymaryColor),),
-                TextFieldNormalWidget(
-                  hintText: "Nombre Completo", 
-                  icon: Icons.email, 
+            child: Column(children: [
+              divider30(),
+              SvgPicture.asset(
+                "assets/images/register.svg",
+                height: 180.0,
+              ),
+              divider20(),
+              Text(
+                "Regístrate",
+                style: TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.w600,
+                    color: kBrandPrymaryColor),
+              ),
+              TextFieldNormalWidget(
+                  hintText: "Nombre Completo",
+                  icon: Icons.email,
                   controller: _fullnameController),
-                TextFieldNormalWidget(
-                  hintText: "Correo", 
-                  icon: Icons.email, 
+              TextFieldNormalWidget(
+                  hintText: "Correo",
+                  icon: Icons.email,
                   controller: _emailController),
-                divider20(),
-                TextFieldPasswordWidget(controller: _passwordController),
-                divider10(),
-                ButtonCustomWidget(text: "Registrate", 
-                color: kBrandPrymaryColor, 
+              divider20(),
+              TextFieldPasswordWidget(controller: _passwordController),
+              divider10(),
+              ButtonCustomWidget(
+                text: "Registrate",
+                color: kBrandPrymaryColor,
                 icon: "check",
-                onPressed: (){
+                onPressed: () {
                   _registerUser();
                 },
-                ),  
-              ]
-            ),
+              ),
+            ]),
           ),
         ),
       ),
