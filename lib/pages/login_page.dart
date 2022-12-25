@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:tasks/pages/home_page.dart';
 import 'package:tasks/pages/register_page.dart';
 import 'package:tasks/ui/general/colors.dart';
@@ -19,6 +20,7 @@ class _LoginPageState extends State<LoginPage> {
   final formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final GoogleSignIn _googleSigIn = GoogleSignIn(scopes: ["email"]);
 
   _login() async {
     try {
@@ -44,6 +46,26 @@ class _LoginPageState extends State<LoginPage> {
         showSnackBarError(context, "Contraseña incorrecta");
       }
     }
+  }
+
+    //Login con google
+  _loginWithGoogle() async{
+   GoogleSignInAccount? googleSignInAccount = await _googleSigIn.signIn();
+
+    if(googleSignInAccount == null){
+      return;
+    }
+
+    GoogleSignInAuthentication _googleSignInAuth = await googleSignInAccount.authentication;
+
+     OAuthCredential credential = GoogleAuthProvider.credential(
+      idToken: _googleSignInAuth.idToken ,
+      accessToken: _googleSignInAuth.accessToken ,
+    );
+
+    UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
+
+
   }
 
   @override
