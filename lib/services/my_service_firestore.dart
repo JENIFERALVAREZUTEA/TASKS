@@ -34,7 +34,7 @@ class MyServiceFirestore {
     return documentReference.id;
   }
 
- //verificar usuario
+ //se de verificar usuario
 
   Future<bool> cherckUser(String email) async{
    QuerySnapshot collection = await _collectionReference.where("email", isEqualTo: email).get();
